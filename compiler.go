@@ -19,7 +19,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/eknkc/amber/parser"
+	"github.com/daqing/amber/parser"
 )
 
 var builtinFunctions = [...]string{
@@ -42,8 +42,9 @@ const (
 // Compiler is the main interface of Amber Template Engine.
 // In order to use an Amber template, it is required to create a Compiler and
 // compile an Amber source to native Go template.
+//
 //	compiler := amber.New()
-// 	// Parse the input file
+//	// Parse the input file
 //	err := compiler.ParseFile("./input.amber")
 //	if err == nil {
 //		// Compile input file to Go template
