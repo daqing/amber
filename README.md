@@ -284,6 +284,16 @@ Parent template can define several named blocks and child template can modify th
             div#main
                 p Some content here
 
+### Output raw HTML
+
+Use `template.HTML()` to output HTML without escaping.
+
+```go
+data := map[string]any{
+    "ContentHTML": template.HTML("<p>foo</p>"),
+}
+```
+
 ### License
 (The MIT License)
 
