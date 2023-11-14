@@ -214,7 +214,7 @@ func runtime_eql(x, y interface{}) bool {
 			case reflect.Float32, reflect.Float64:
 				return vx.String() == fmt.Sprintf("%f", vy.Float())
 			case reflect.String:
-				return vx.String() == fmt.Sprintf("%s", vy.String())
+				return vx.String() == vy.String()
 			}
 		}
 	case reflect.Bool:

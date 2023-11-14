@@ -463,10 +463,10 @@ func run(tpl string, data interface{}) (string, error) {
 	return strings.TrimSpace(buf.String()), nil
 }
 
-func generate(tpl string) (string, error) {
-	c := New()
-	if err := c.ParseData([]byte(tpl), "test.amber"); err != nil {
-		return "", err
-	}
-	return c.CompileString()
-}
+// func generate(tpl string) (string, error) {
+// 	c := New()
+// 	if err := c.ParseData([]byte(tpl), "test.amber"); err != nil {
+// 		return "", err
+// 	}
+// 	return c.CompileString()
+// }

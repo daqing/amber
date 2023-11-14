@@ -57,10 +57,10 @@ const (
 type Compiler struct {
 	// Compiler options
 	Options
-	filename     string
-	node         parser.Node
-	indentLevel  int
-	newline      bool
+	filename    string
+	node        parser.Node
+	indentLevel int
+	// newline      bool
 	buffer       *bytes.Buffer
 	tempvarIndex int
 	mixins       map[string]*parser.Mixin
@@ -379,27 +379,27 @@ func (c *Compiler) visit(node parser.Node) {
 		}
 	}()
 
-	switch node.(type) {
+	switch node := node.(type) {
 	case *parser.Block:
-		c.visitBlock(node.(*parser.Block))
+		c.visitBlock(node)
 	case *parser.Doctype:
-		c.visitDoctype(node.(*parser.Doctype))
+		c.visitDoctype(node)
 	case *parser.Comment:
-		c.visitComment(node.(*parser.Comment))
+		c.visitComment(node)
 	case *parser.Tag:
-		c.visitTag(node.(*parser.Tag))
+		c.visitTag(node)
 	case *parser.Text:
-		c.visitText(node.(*parser.Text))
+		c.visitText(node)
 	case *parser.Condition:
-		c.visitCondition(node.(*parser.Condition))
+		c.visitCondition(node)
 	case *parser.Each:
-		c.visitEach(node.(*parser.Each))
+		c.visitEach(node)
 	case *parser.Assignment:
-		c.visitAssignment(node.(*parser.Assignment))
+		c.visitAssignment(node)
 	case *parser.Mixin:
-		c.visitMixin(node.(*parser.Mixin))
+		c.visitMixin(node)
 	case *parser.MixinCall:
-		c.visitMixinCall(node.(*parser.MixinCall))
+		c.visitMixinCall(node)
 	}
 }
 
@@ -769,7 +769,7 @@ func (c *Compiler) visitExpression(outerexpr ast.Expr) string {
 						break
 					}
 				}
-				for fname, _ := range FuncMap {
+				for fname := range FuncMap {
 					if fname == ident.Name {
 						builtin = true
 						break
