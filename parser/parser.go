@@ -171,8 +171,6 @@ func (p *Parser) parseRelativeFile(filename string) *Parser {
 		filename = filename + ".amber"
 	}
 
-	fmt.Println("parsing relative file, filename=", filename)
-
 	parser, err := FileParser(filename)
 	if err != nil && p.fs != nil {
 		parser, err = VirtualFileParser(filename, p.fs)
