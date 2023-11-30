@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 )
@@ -44,7 +45,7 @@ func (p *Parser) SetVirtualFilesystem(fs http.FileSystem) {
 }
 
 func FileParser(filename string) (*Parser, error) {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 
 	if err != nil {
 		return nil, err
@@ -155,11 +156,22 @@ func (p *Parser) parseRelativeFile(filename string) *Parser {
 		panic("Unable to import or extend " + filename + " in a non filesystem based parser.")
 	}
 
-	filename = filepath.Join(filepath.Dir(p.filename), filename)
+	if strings.HasPrefix(filename, "/") {
+		appRoot := os.Getenv("AMBER_ROOT_DIR")
+		if len(appRoot) == 0 {
+			panic("The environment variable `AMBER_ROOT_DIR` was not defined.")
+		}
 
-	if strings.IndexRune(filepath.Base(filename), '.') < 0 {
+		filename = filepath.Join(appRoot, filename)
+	} else {
+		filename = filepath.Join(filepath.Dir(p.filename), filename)
+	}
+
+	if !strings.Contains(filepath.Base(filename), ".") {
 		filename = filename + ".amber"
 	}
+
+	fmt.Println("parsing relative file, filename=", filename)
 
 	parser, err := FileParser(filename)
 	if err != nil && p.fs != nil {
