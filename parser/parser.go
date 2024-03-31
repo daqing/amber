@@ -159,13 +159,11 @@ func (p *Parser) parseRelativeFile(filename string) *Parser {
 	if strings.HasPrefix(filename, "/") {
 		appRoot := os.Getenv("AMBER_ROOT_DIR")
 		if len(appRoot) == 0 {
-			// Special case for the airway framework
-			// See https://github.com/daqing/airway
-			appRoot = os.Getenv("AIRWAY_PWD")
+			appRoot = os.Getenv("APP_PWD")
 		}
 
 		if len(appRoot) == 0 {
-			panic("The environment variable `AMBER_ROOT_DIR` or `AIRWAY_PWD` was not defined.")
+			panic("The environment variable `AMBER_ROOT_DIR` or `APP_PWD` was not defined.")
 		}
 
 		filename = filepath.Join(appRoot, filename)
