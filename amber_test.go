@@ -29,6 +29,28 @@ func Test_Nesting(t *testing.T) {
 	}
 }
 
+// concat string with uint
+func Test_StringCatUint(t *testing.T) {
+	type Node struct {
+		ID   uint
+		Name string
+	}
+
+	var nodes = []*Node{{1, "Hello"}}
+	data := map[string]any{"Nodes": nodes}
+
+	res, err := run(`
+		each $node in Nodes
+			a[href="/node/"+$node.ID] #{$node.Name}`, data)
+
+	if err != nil {
+		t.Error(err.Error())
+		return
+	}
+
+	expect(res, `<a href="/node/1">Hello</a>`, t)
+}
+
 func Test_Mixin(t *testing.T) {
 	res, err := run(`
 		mixin a($a)

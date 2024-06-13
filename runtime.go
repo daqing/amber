@@ -51,8 +51,10 @@ func runtime_add(x, y interface{}) interface{} {
 	case reflect.String:
 		{
 			switch vy.Kind() {
-			case reflect.Int, reflect.Int32, reflect.Int64, reflect.Int16, reflect.Int8:
+			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 				return fmt.Sprintf("%s%d", vx.String(), vy.Int())
+			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+				return fmt.Sprintf("%s%d", vx.String(), vy.Uint())
 			case reflect.Float32, reflect.Float64:
 				return fmt.Sprintf("%s%f", vx.String(), vy.Float())
 			case reflect.String:
